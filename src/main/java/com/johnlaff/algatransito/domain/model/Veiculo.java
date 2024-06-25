@@ -2,11 +2,14 @@ package com.johnlaff.algatransito.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.johnlaff.algatransito.domain.validation.ValidationsGroups;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,6 +26,7 @@ public class Veiculo {
     private Integer id;
 
     @Valid
+    @ConvertGroup(from = Default.class , to = ValidationsGroups.ProprietarioId.class)
     @NotNull
     @ManyToOne
     @JoinColumn(name = "proprietarioid", nullable = false)
