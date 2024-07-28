@@ -2,6 +2,7 @@ package com.johnlaff.algatransito.api.controller;
 
 import com.johnlaff.algatransito.api.assembler.VeiculoAssembler;
 import com.johnlaff.algatransito.api.model.VeiculoModel;
+import com.johnlaff.algatransito.api.model.input.VeiculoInput;
 import com.johnlaff.algatransito.domain.model.Veiculo;
 import com.johnlaff.algatransito.domain.repository.VeiculoRepository;
 import com.johnlaff.algatransito.domain.service.RegistroVeiculoService;
@@ -37,8 +38,11 @@ public class VeiculoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VeiculoModel cadastrar(@Valid @RequestBody Veiculo veiculo)   {
-        return veiculoAssembler.toModel(registroVeiculoService.cadastrar(veiculo));
+    public VeiculoModel cadastrar(@Valid @RequestBody VeiculoInput veiculoInput)   {
+        Veiculo  novoVeiculo = veiculoAssembler.toEntity(veiculoInput);
+        Veiculo veiculoCadastrado = registroVeiculoService.cadastrar(novoVeiculo);
+
+        return veiculoAssembler.toModel(veiculoCadastrado);
     }
 
 }
