@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/veiculos/{veiculoId}/autuacoes")
@@ -26,5 +28,13 @@ public class AutuacaoController {
         Autuacao autuacaoRegistrada = registroAutuacaoService
                 .registrar(veiculoId, novaAutuacao);
         return autuacaoAssembler.toModel(autuacaoRegistrada);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<AutuacaoModel> listar (@PathVariable Integer veiculoId) {
+        return registroAutuacaoService.buscar(veiculoId).stream()
+                .map(autuacaoAssembler::toModel)
+                .toList();
     }
 }
