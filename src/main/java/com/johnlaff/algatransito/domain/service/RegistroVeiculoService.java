@@ -1,5 +1,6 @@
 package com.johnlaff.algatransito.domain.service;
 
+import com.johnlaff.algatransito.domain.exception.EntidadeNaoEncontradaException;
 import com.johnlaff.algatransito.domain.exception.NegocioException;
 import com.johnlaff.algatransito.domain.model.Proprietario;
 import com.johnlaff.algatransito.domain.model.StatusVeiculo;
@@ -20,7 +21,7 @@ public class RegistroVeiculoService {
 
     public Veiculo buscar(Integer veiculoId) {
         return veiculoRepository.findById(veiculoId)
-                .orElseThrow(() -> new NegocioException("Veiculo não encontrado"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Veiculo não encontrado"));
     }
 
     @Transactional
